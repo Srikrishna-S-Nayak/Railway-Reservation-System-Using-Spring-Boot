@@ -52,9 +52,9 @@
   </style>
 </head>
 <body>
-<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="./style.css" />
 <div>
-  <link href="index.css" rel="stylesheet" />
+  <link href="./index.css" rel="stylesheet" />
 
   <div class="home-container">
     <div id="overlay"></div>
@@ -74,8 +74,17 @@
             <span class="home-nav52 bodySmall">Contact Us</span>
           </nav>
           <div class="home-buttons">
-            <button class="home-login buttonFlat" id="LoginButton">Login</button>
-            <button class="buttonFilled" id="RegisterButton">Register</button>
+            <div th:if="${username != null}">
+              <span style="font-family: 'Open Sans', sans-serif; font-size: 16px; color: #333; margin-right: 10px;" th:text="${username}"></span>
+              <form th:action="@{/logout}" method="post">
+                <button type="submit" class="buttonFilled logout-btn">Logout</button>
+              </form>
+            </div>
+            <div th:unless="${username != null}">
+              <span style="font-family: 'Open Sans', sans-serif; font-size: 16px; color: #333; margin-right: 10px;"></span>
+                <button class="home-login buttonFilled" id="LoginButton">Login</button>
+                <button class="buttonFilled" id="RegisterButton">Register</button>
+            </div>
           </div>
         </div>
       </header>

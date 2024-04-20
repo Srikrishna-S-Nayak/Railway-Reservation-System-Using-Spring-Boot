@@ -494,17 +494,3 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     z-index: 10000;
 }
-
-.username-text {
-    font-size: 16px;
-    font-family: Open Sans;
-    font-weight: 400;
-    line-height: 150%;
-    color: var(--dl-color-custom-neutral-light);
-    margin-right: 8px;
-}
-
-.logout-btn {
-    font-size: 14px;
-    padding: 6px 12px;
-}
