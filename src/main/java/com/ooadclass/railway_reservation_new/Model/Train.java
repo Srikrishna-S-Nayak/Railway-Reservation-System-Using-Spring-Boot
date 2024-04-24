@@ -4,53 +4,40 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
 
+@Getter
 @Entity
 @Table(name = "trains")
 public class Train {
+    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Setter
     @Getter
-    @Column(nullable = false)
-    private String trainNumber;
-
-    @Setter
-    @Getter
-    @Column(nullable = false)
     private String trainName;
 
     @Setter
-    @Getter
-    @Column(nullable = false)
     private String source;
 
     @Setter
-    @Getter
-    @Column(nullable = false)
     private String destination;
 
     @Setter
-    @Getter
-    @Column(nullable = false)
-    private LocalDateTime departureTime;
+    private LocalTime departureTime;
 
     @Setter
-    @Getter
-    @Column(nullable = false)
-    private LocalDateTime arrivalTime;
+    private LocalTime arrivalTime;
 
     @Setter
-    @Getter
-    @Column(nullable = false)
-    private int totalSeats;
+    private int availableSeats;
 
     @Setter
-    @Getter
-    @Column(nullable = false)
-    private double ticketPrice;
+    @OneToMany(mappedBy = "train", cascade = CascadeType.ALL)
+    private List<Reservation> reservations;
 
+    // Constructors, getters, and setters
 }

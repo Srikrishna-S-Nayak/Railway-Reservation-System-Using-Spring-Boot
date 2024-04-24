@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Railway Reservation System - Book Tickets</title>
+    <meta property="og:title" content="Railway Reservation System - Book Tickets"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="utf-8"/>
+    <meta property="twitter:card" content="summary_large_image"/>
+    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;display=swap"
+          data-tag="font"/>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Taviraj:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+          data-tag="font"/>
+    <style data-tag="reset-style-sheet">
+        html {  line-height: 1.15;}body {  margin: 0;}* {  box-sizing: border-box;  border-width: 0;  border-style: solid;}p,li,ul,pre,div,h1,h2,h3,h4,h5,h6,figure,blockquote,figcaption {  margin: 0;  padding: 0;}button {  background-color: transparent;}button,input,optgroup,select,textarea {  font-family: inherit;  font-size: 100%;  line-height: 1.15;  margin: 0;}button,select {  text-transform: none;}button,[type="button"],[type="reset"],[type="submit"] {  -webkit-appearance: button;}button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner {  border-style: none;  padding: 0;}button:-moz-focus,[type="button"]:-moz-focus,[type="reset"]:-moz-focus,[type="submit"]:-moz-focus {  outline: 1px dotted ButtonText;}a {  color: inherit;  text-decoration: inherit;}input {  padding: 2px 4px;}img {  display: block;}html { scroll-behavior: smooth  }
+    </style>
+    <style data-tag="default-style-sheet">
+        html {
+            font-family: Inter;
+            font-size: 16px;
+        }
+
+        body {
+            font-weight: 400;
+            font-style:normal;
+            text-decoration: none;
+            text-transform: none;
+            letter-spacing: normal;
+            line-height: 1.15;
+            color: var(--dl-color-gray-black);
+            background-color: var(--dl-color-gray-white);
+        }
+    </style>
+</head>
+<body style="display: flex; flex-direction: column; min-height: 100vh;">
+<div>
+    <link href="index.css" rel="stylesheet" />
+    <div class="home-container" style="flex-grow: 1;">
+        <div class="home-header">
+            <header
+                    data-thq="thq-navbar"
+                    class="navbarContainer home-navbar-interactive"
+            >
+                <div>Railway Reservation System 🚆</div>
+                <img src="/ticket.png" alt="Home Icon" class="home-icon">
+                <div data-thq="thq-navbar-nav" class="home-desktop-menu">
+                    <nav class="home-links">
+                        <span class="bodySmall">Home</span>
+                        <span class="home-nav22 bodySmall">Book Tickets</span>
+                        <span class="home-nav32 bodySmall">My Bookings</span>
+                        <span class="home-nav42 bodySmall">PNR Enquiry</span>
+                        <span class="home-nav52 bodySmall">Contact Us</span>
+                    </nav>
+                    <div class="home-buttons">
+                        <div th:if="${username != null}">
+                            <span style="font-family: 'Open Sans', sans-serif; font-size: 16px; color: #333; margin-right: 10px;" th:text="${username}"></span>
+                            <form th:action="@{/logout}" method="post">
+                                <button type="submit" class="buttonFilled logout-btn">Logout</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="heroContainer">
+            <div class="home-container1">
+                <h1 class="home-hero-heading heading1">Book Tickets</h1>
+                <form th:action="@{/book-tickets}" th:object="${reservation}" method="post">
+                    <div>
+                        <label for="source" class="bodySmall">Source:</label>
+                        <select id="source" name="source" class="input" required>
+                            <option value="" disabled selected>Select a source</option>
+                            <option th:each="source : ${sources}" th:value="${source}" th:text="${source}"></option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="destination" class="bodySmall">Destination:</label>
+                        <select id="destination" name="destination" class="input" required>
+                            <option value="" disabled selected>Select a destination</option>
+                            <option th:each="destination : ${destinations}" th:value="${destination}" th:text="${destination}"></option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="reservationTime" class="bodySmall">Travel Date:</label>
+                        <input type="date" id="reservationTime" name="reservationTime" class="input" required>
+                    </div>
+<!--                    <div id = "trainsRes">-->
+<!--                        <label for="trainId" class="bodySmall">Train:</label>-->
+<!--                        <select id="trainId" name="trainId" class="input" required>-->
+<!--                            <option value="" disabled selected>Select a train</option>-->
+<!--                            <option th:each="train : ${trains}" th:if="${train.source == reservation.source && train.destination == reservation.destination}" th:value="${train.id}" th:text="${train.trainName}"></option>-->
+<!--                        </select>-->
+<!--                    </div>-->
+                    <div id="trainsRes">
+                        <label for="trainId" class="bodySmall">Train:</label>
+                        <select id="trainId" name="trainId" class="input" required th:field="*{bookedTrainId}">
+                            <option value="" disabled selected>Select a train</option>
+                            <option th:each="train : ${trains}" th:if="${train.source == reservation.source && train.destination == reservation.destination}" th:value="${train.id}" th:text="${train.trainName}"></option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="numberOfSeats" class="bodySmall">Number of Seats:</label>
+                        <input type="number" id="numberOfSeats" name="numberOfSeats" class="input" min="1" required>
+                    </div>
+                    <button type="submit" class="buttonFilled">Book Now</button>
+                </form>
+            </div>
+        </div>
+        <div class="home-features">
+            <div class="featuresContainer">
+                <div class="home-features1">
+                    <div class="home-container2" style="display: flex; flex-direction: column; height: 42vh;">
+                        <span class="overline" ></span>
+                    </div>
+                    <div class="home-container3"></div>
+                </div>
+            </div>
+        </div>
+        <div class="home-footer" style="flex-shrink: 0;">
+            <footer class="footerContainer home-footer1">
+                <div class="home-container4">
+                    <span class="logo">Railway Reservation System</span>
+                    <nav class="home-nav1">
+                        <span class="bodySmall">Home</span>
+                        <span class="home-nav222 bodySmall">Book Tickets</span>
+                        <span class="home-nav322 bodySmall">My Bookings</span>
+                        <span class="home-nav422 bodySmall">PNR Enquiry</span>
+                        <span class="home-nav522 bodySmall">Contact Us</span>
+                    </nav>
+                </div>
+                <div class="home-separator"></div>
+                <div class="home-container5">
+                      <span class="bodySmall home-text45">
+                        © 2024 OOAD Project, All Rights Reserved.
+                      </span>
+                </div>
+            </footer>
+        </div>
+    </div>
+</div>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    let trains = /*[[${trains}]]*/ [];
+    /*]]>*/
+
+    $(document).ready(function() {
+        $('#trainsRes').hide();
+
+        $('#source, #destination').on('change', function() {
+            const source = $('#source').val();
+            const destination = $('#destination').val();
+
+            if (source && destination) {
+                $('#trainsRes').show();
+                const filteredTrains = trains.filter(train => train.source === source && train.destination === destination);
+                const trainOptions = filteredTrains.map(train => `<option value="${train.id}">${train.trainName}</option>`);
+                $('#trainId').html(`<option value="" disabled selected>Select a train</option>${trainOptions.join('')}`);
+            } else {
+                $('#trainsRes').hide();
+                $('#trainId').html('<option value="" disabled selected>Select a train</option>');
+            }
+        });
+    });
+</script>
+
+</html>

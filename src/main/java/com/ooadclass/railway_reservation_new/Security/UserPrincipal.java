@@ -3,6 +3,7 @@ package com.ooadclass.railway_reservation_new.Security;
 import com.ooadclass.railway_reservation_new.Model.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,6 +16,8 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class UserPrincipal implements UserDetails {
     private Long id;
+
+    @Getter
     private String username;
     private String email;
     private String password;
