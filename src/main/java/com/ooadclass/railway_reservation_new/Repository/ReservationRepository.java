@@ -1,13 +1,13 @@
 package com.ooadclass.railway_reservation_new.Repository;
 
+import com.ooadclass.railway_reservation_new.Model.Reservation;
 import com.ooadclass.railway_reservation_new.Model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import java.util.List;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
-    User getUserByUsername(String username);
-    Optional<User> findByUsername(String username);
+public interface ReservationRepository extends JpaRepository<Reservation, Long> {
+    List<Reservation> findByUser(User user);
 }

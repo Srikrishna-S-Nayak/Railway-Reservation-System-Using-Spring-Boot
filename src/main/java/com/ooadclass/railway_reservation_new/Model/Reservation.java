@@ -1,49 +1,65 @@
 package com.ooadclass.railway_reservation_new.Model;
 
 import jakarta.persistence.*;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
+
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
+@Getter
 @Entity
 @Table(name = "reservations")
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ReservationId")
     private Long id;
 
     @Setter
-    @Getter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "UserID", nullable = false)
     private User user;
 
     @Setter
     @Getter
+    private Long bookedTrainId;
+
+    @Getter
+    @Setter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "TrainID", nullable = false)
     private Train train;
 
     @Setter
-    @Getter
-    @Column(name = "NumberOfSeats", nullable = false)
     private int numberOfSeats;
 
-    @Setter
     @Getter
-    @Column(name = "TotalAmount", nullable = false)
     private double totalAmount;
 
-    @Setter
     @Getter
-    @Column(name = "DateOfReservation", nullable = false)
+    @Setter
+    private String source;
+
+    @Getter
+    @Setter
+    private String destination;
+
+    @Setter
     private LocalDateTime bookingTime;
 
     @Setter
-    @Getter
-    @Column(name = "ReservationStatus", nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate reservationDate;
+
+    @Setter
     private ReservationStatus status;
+
+    public double setTotalAmount(double totalAmount) {
+        return Math.round((bookedTrainId + totalAmount)/ 100.0)*2;
+    }
 
 }
 
