@@ -86,21 +86,13 @@
                         <label for="reservationTime" class="bodySmall">Travel Date:</label>
                         <input type="date" id="reservationTime" name="reservationTime" class="input" required>
                     </div>
-<!--                    <div id = "trainsRes">-->
-<!--                        <label for="trainId" class="bodySmall">Train:</label>-->
-<!--                        <select id="trainId" name="trainId" class="input" required>-->
-<!--                            <option value="" disabled selected>Select a train</option>-->
-<!--                            <option th:each="train : ${trains}" th:if="${train.source == reservation.source && train.destination == reservation.destination}" th:value="${train.id}" th:text="${train.trainName}"></option>-->
-<!--                        </select>-->
-<!--                    </div>-->
-                    <div id="trainsRes">
-                        <label for="trainId" class="bodySmall">Train:</label>
-                        <select id="trainId" name="trainId" class="input" required th:field="*{bookedTrainId}">
+                    <div id = "trainsRes">
+                        <label for="bookedTrainId" class="bodySmall">Train:</label>
+                        <select id="bookedTrainId" name="bookedTrainId" class="input" required>
                             <option value="" disabled selected>Select a train</option>
-                            <option th:each="train : ${trains}" th:if="${train.source == reservation.source && train.destination == reservation.destination}" th:value="${train.id}" th:text="${train.trainName}"></option>
+                            <option th:each="train : ${trains}" th:value="${train.id}" th:text="${train.trainName  + ' (' + train.id + ')'}"></option>
                         </select>
                     </div>
-
                     <div>
                         <label for="numberOfSeats" class="bodySmall">Number of Seats:</label>
                         <input type="number" id="numberOfSeats" name="numberOfSeats" class="input" min="1" required>
@@ -143,31 +135,31 @@
 </div>
 </body>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!--<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
 
-<script th:inline="javascript">
-    /*<![CDATA[*/
-    let trains = /*[[${trains}]]*/ [];
-    /*]]>*/
+<!--<script th:inline="javascript">-->
+<!--    /*<![CDATA[*/-->
+<!--    let trains = /*[[${trains}]]*/ [];-->
+<!--    /*]]>*/-->
 
-    $(document).ready(function() {
-        $('#trainsRes').hide();
+<!--    $(document).ready(function() {-->
+<!--        $('#trainsRes').hide();-->
 
-        $('#source, #destination').on('change', function() {
-            const source = $('#source').val();
-            const destination = $('#destination').val();
-
-            if (source && destination) {
-                $('#trainsRes').show();
-                const filteredTrains = trains.filter(train => train.source === source && train.destination === destination);
-                const trainOptions = filteredTrains.map(train => `<option value="${train.id}">${train.trainName}</option>`);
-                $('#trainId').html(`<option value="" disabled selected>Select a train</option>${trainOptions.join('')}`);
-            } else {
-                $('#trainsRes').hide();
-                $('#trainId').html('<option value="" disabled selected>Select a train</option>');
-            }
-        });
-    });
-</script>
+<!--        $('#destination').on('change', function() {-->
+<!--            const source = $('#source').val();-->
+<!--            const destination = $('#destination').val();-->
+<!--            console.log(source,destination);-->
+<!--            if (source && destination) {-->
+<!--                $('#trainsRes').show();-->
+<!--                const filteredTrains = trains.filter(train => train.source === source && train.destination === destination);-->
+<!--                const trainOptions = filteredTrains.map(train => `<option value="${train.id}">${train.trainName}</option>`);-->
+<!--                $('#trainId').html(`<option value="" disabled selected>Select a train</option>${trainOptions.join('')}`);-->
+<!--            } else {-->
+<!--                $('#trainsRes').hide();-->
+<!--                $('#trainId').html('<option value="" disabled selected>Select a train</option>');-->
+<!--            }-->
+<!--        });-->
+<!--    });-->
+<!--</script>-->
 
 </html>

@@ -73,8 +73,9 @@
             <span class="home-nav42 bodySmall">PNR Enquiry</span>
             <span class="home-nav52 bodySmall">Contact Us</span>
           </nav>
+
           <div class="home-buttons">
-            <div th:if="${username != null}">
+              <div th:if="${username != null}">
               <span style="font-family: 'Open Sans', sans-serif; font-size: 16px; color: #333; margin-right: 10px;" th:text="${username}"></span>
               <form th:action="@{/logout}" method="post">
                 <button type="submit" class="buttonFilled logout-btn">Logout</button>

@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -19,7 +18,7 @@ public class Reservation {
     private Long id;
 
     @Setter
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "UserID", nullable = false)
     private User user;
 
@@ -29,7 +28,7 @@ public class Reservation {
 
     @Getter
     @Setter
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "TrainID", nullable = false)
     private Train train;
 
@@ -57,8 +56,8 @@ public class Reservation {
     @Setter
     private ReservationStatus status;
 
-    public double setTotalAmount(double totalAmount) {
-        return Math.round((bookedTrainId + totalAmount)/ 100.0)*2;
+    public void setTotalAmount(double totalAmount) {
+        this.totalAmount = Math.round((bookedTrainId + totalAmount)/ 100.0)*2;
     }
 
 }

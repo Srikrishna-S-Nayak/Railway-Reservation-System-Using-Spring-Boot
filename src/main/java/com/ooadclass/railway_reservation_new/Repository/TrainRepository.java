@@ -18,4 +18,5 @@ public interface TrainRepository extends JpaRepository<Train, Long> {
 
     @Query("SELECT DISTINCT t.destination FROM Train t")
     Set<String> findDistinctDestination();
+
 }
