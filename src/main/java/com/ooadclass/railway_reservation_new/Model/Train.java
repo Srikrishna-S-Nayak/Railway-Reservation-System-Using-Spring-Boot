@@ -39,5 +39,4 @@ public class Train {
     @OneToMany(mappedBy = "train", cascade = CascadeType.ALL)
     private List<Reservation> reservations;
 
-    // Constructors, getters, and setters
 }

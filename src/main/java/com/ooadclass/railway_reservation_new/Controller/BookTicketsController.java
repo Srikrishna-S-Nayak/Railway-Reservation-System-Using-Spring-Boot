@@ -49,7 +49,6 @@ public class BookTicketsController {
         UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.getUserByUsername(userPrincipal.getUsername());
         Long trainId = reservation.getBookedTrainId();
-
         Train train = trainService.getTrainById(trainId);
 
         List<Train> trains = trainService.getTrainsBySourceDestination(train.getSource(), train.getDestination());
