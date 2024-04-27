@@ -16,6 +16,7 @@ public class Role {
     private ERole name;
 
     public Role() {
+        this.name = ERole.ROLE_USER;
     }
 
     public Role(ERole name) {

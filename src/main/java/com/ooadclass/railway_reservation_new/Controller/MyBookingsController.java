@@ -22,9 +22,8 @@ public class MyBookingsController {
     @Autowired
     private UserService userService;
 
-
     @GetMapping("/my-bookings")
-    public String myBookings(Authentication authentication, Model model) {
+    public String myBookings(Model model) {
         UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.getUserByUsername(userPrincipal.getUsername());
         List<Reservation> reservations = reservationService.getReservationsByUser(user);
